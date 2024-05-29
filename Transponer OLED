@@ -1,0 +1,30 @@
+lista_OLED = []
+for i in range(8):
+    byte = int(input(f"Digite el {i+1} byte en decimal (0-255): "))
+    lista_OLED.append(byte)
+
+def transponer_y_convertir(lista_OLED):
+    matriz = [[0 for _ in range(8)] for _ in range(8)]
+    
+    for i in range(8):
+        x = lista_OLED[i]
+        for j in range(8):
+            matriz[i][j] = (x >> j) & 1  
+    
+    matriz_transpuesta = [[0 for _ in range(8)] for _ in range(8)]
+    for i in range(8):
+        for j in range(8):
+            matriz_transpuesta[j][i] = matriz[i][j]
+    
+        lista_XBM = []
+    for j in range(8):
+        valor_decimal = 0
+        for i in range(8):
+            valor_decimal += matriz_transpuesta[j][i] * (1 << i)
+        lista_XBM.append(valor_decimal)
+    
+    return lista_XBM
+
+resultados = transponer_y_convertir(lista_OLED)
+
+print(resultados)
